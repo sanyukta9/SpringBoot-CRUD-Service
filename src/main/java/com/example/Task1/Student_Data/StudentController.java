@@ -1,6 +1,7 @@
 package com.example.Task1.Student_Data;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,5 +56,17 @@ public class StudentController {
     public ResponseEntity<Object> deleteAllStudents() {
         studentService.deleteAllStudents();
         return ResponseEntity.status(HttpStatus.OK).body("All student records deleted successfully!");
+    }
+
+    //sorting
+    @GetMapping("/sort/{field}")
+    public List<Student> sort(@PathVariable String field) {
+        return studentService.sortStudent(field);
+    }
+
+    //pagination
+    @GetMapping("/pagination/{page}/{pageSize}")
+    public Page<Student> paginationStudent(@PathVariable int page, @PathVariable int pageSize) {
+        return studentService.getStudentWithPagination(page, pageSize);
     }
 }

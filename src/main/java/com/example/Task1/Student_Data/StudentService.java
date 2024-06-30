@@ -1,6 +1,9 @@
 package com.example.Task1.Student_Data;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,4 +34,15 @@ public class StudentService {
     public void deleteAllStudents() {
         studentRepository.deleteAll();
     }
+
+    //sorting
+    public List<Student> sortStudent(String field) {
+        return studentRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+    }
+
+    //pagination
+    public Page<Student> getStudentWithPagination(int page, int pageSize) {
+        return studentRepository.findAll(PageRequest.of(page, pageSize));
+    }
+
 }
